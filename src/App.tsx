@@ -11,10 +11,9 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import './css/main.min.css'
 
 function App() {
-   // const [theme, setTheme] = useState<DefaultTheme>(JSON.parse(localStorage.getItem("THEME") as string) || light)
-   const [theme, setTheme] = useState<DefaultTheme>(light)
+   const [theme, setTheme] = useState<DefaultTheme>(JSON.parse(localStorage.getItem("THEME") as string) || light)
 
-   // useEffect(() => localStorage.setItem("THEME", JSON.stringify(theme)), [theme])
+   useEffect(() => localStorage.setItem("THEME", JSON.stringify(theme)), [theme])
 
    const handleTheme = () => setTheme(theme.title === 'light' ? dark : light)
 
