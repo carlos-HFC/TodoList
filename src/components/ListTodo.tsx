@@ -51,7 +51,7 @@ const ListTodo: React.FC<ListTodoProps> = ({ todos, remove, done, handleDone, to
    return (
       <section className="mt-4">
          <div className="importButtons">
-            <Json disabled={!todos.length} />
+            <Json />
             <Button background="typescript" disabled={!todos.length} title="Exportar arquivo JSON" className="btn-sm ml-2" onClick={exportJson}>
                Exportar JSON
             </Button>

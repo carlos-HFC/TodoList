@@ -1,6 +1,6 @@
 import { ChangeEvent } from 'react'
 
-const Json: React.FC<{ disabled: boolean }> = ({ disabled }) => {
+const Json: React.FC<{}> = () => {
    const todos = JSON.parse(localStorage.getItem("TODO") as string) || []
 
    function readFile(file: File) {
@@ -27,7 +27,7 @@ const Json: React.FC<{ disabled: boolean }> = ({ disabled }) => {
    }
 
    return (
-      <label htmlFor="uploadJson" title="Importar arquivo JSON" className={`btn btn-typescript btn-sm ${disabled ? 'disabled' : ''}`}>
+      <label htmlFor="uploadJson" title="Importar arquivo JSON" className="btn btn-typescript btn-sm">
          <input type="file" id="uploadJson" className="d-none" accept=".json" onChange={upload} />
          Importar JSON
       </label>
