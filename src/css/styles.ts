@@ -1,4 +1,4 @@
-import { createGlobalStyle, css } from "styled-components";
+import { createGlobalStyle } from "styled-components";
 
 export default createGlobalStyle`
    * {
@@ -83,39 +83,6 @@ export default createGlobalStyle`
       }
    }
 
-   [class|="notification-header"] {
-      padding: 6px 12px;
-      background: inherit;
-   }
-
-   .notification {
-      position: fixed;
-      z-index: 99;
-      top: 10%;
-      right: -400px;
-      width: 300px;
-      font-size: 0.8rem;
-      flex: 1;
-      border-radius: 5px;
-      padding: 12px;
-      transition: right 1s;
-
-      &-body {
-         padding: inherit
-      }
-   }
-
-   ${props => {
-      if (props.theme.title === 'light') {
-         return css`
-            .notification {
-               box-shadow: 0 3px 10px rgba(${props.theme.shadow},.5);
-            }
-         
-         `
-      }
-   }}
-
    @media screen and (max-width: 767px) {
       .my-query {
          &__btn {
@@ -124,15 +91,26 @@ export default createGlobalStyle`
       }
    }
 
-   input[type="radio"] {
+   label.btn-typescript {
+      margin-bottom: 0;
+   }
+   
+   .importButtons {
+      display: flex;
+      justify-content: flex-end;
+      margin-bottom: 1rem;
+
+      @media screen and (max-width: 767px) {
+         justify-content: space-between;
+      }
+   }
+
+   input[type="checkbox"], input[type="radio"] {
       position: relative;
-      width: 1rem;
-      height: 1rem;
-      border: 1px solid #bdbdbd;
-      border-radius: 50%;
+      border: 1px solid #bfbfbf;
       appearance: none;
       outline: none;
-      transition: background-color 0.3s;
+      transition: background-color .3s;
 
       &:checked {
          border-color: #999;
@@ -140,19 +118,15 @@ export default createGlobalStyle`
       }
    }
 
+   input[type="radio"] {
+      width: 1rem;
+      height: 1rem;
+      border-radius: 50%;
+   }
+
    input[type="checkbox"] {
-      position: relative;
       width: 1.2rem;
       height: 1.2rem;
-      border: 1px solid #bfbfbf;
       border-radius: 4px;
-      appearance: none;
-      outline: none;
-      transition: background-color 0.3s;
-
-      &:checked {
-         border-color: #999;
-         background: #999;
-      }
    }
 `
