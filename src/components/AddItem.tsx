@@ -1,58 +1,41 @@
 import { FormEvent, useState } from 'react'
 import { FaPlusCircle } from 'react-icons/fa'
 
-import { Button } from '.'
+import { Button, Notification } from '.'
 
 interface TodoProps {
    add: (param: string) => string
 }
 
-export default function AddItem({ add }: TodoProps) {
+const AddItem: React.FC<TodoProps> = ({ add }) => {
    const [todo, setTodo] = useState("")
    const [show, setShow] = useState(false)
-   const [msg, setMsg] = useState({
-      header: "",
-      body: "",
-      style: "",
-   })
+   const [exists, setExists] = useState(false)
 
    function handleSubmitTodo(e: FormEvent) {
       e.preventDefault()
       const adicionar = add(todo.trim())
 
+      setShow(true)
+
       if (adicionar === "Erro") {
-         setShow(true)
-         setMsg({
-            style: "danger",
-            header: "Oopss...",
-            body: "Essa atividade já está cadastrada!"
-         })
+         setExists(true)
          setTimeout(() => setShow(false), 3000)
          return null
       } else {
-         setShow(true)
-         setMsg({
-            style: "success",
-            header: "Oba!",
-            body: "Sua atividade foi cadastrada com sucesso!"
-         })
+         setExists(false)
          setTimeout(() => setShow(false), 3000)
          setTodo("")
       }
    }
 
    return (
-      <section className="mt-5">
-         <div className={`notification alert notification-${msg.style}`} style={show ? { right: "2%" } : { right: -400 }}>
-            <div className={`notification-header-${msg.style}`}>
-               <strong className="mr-auto">{msg.header}</strong>
-            </div>
-            <div className="notification-body">{msg.body}</div>
-         </div>
+      <section className="mt-4">
+         <Notification show={show} exists={exists} />
          <div className="row mb-3">
             <form className="col-12 form-inline justify-content-between" onSubmit={handleSubmitTodo}>
-               <label htmlFor="todo" className="col-form-label mb-2">To Do:</label>
-               <input type="text" id="todo" className="form-control col-12 col-md-8 mb-2" minLength={1} autoComplete="off"
+               <label htmlFor="todo" title="Insira título da atividade" className="col-form-label mb-2">To Do:</label>
+               <input type="text" id="todo" title="Insira título da atividade" className="form-control col-12 col-md-8 mb-2" minLength={1} autoComplete="off"
                   value={todo} onChange={e => setTodo(e.target.value)}
                />
                <Button background="success" className="my-query__btn mb-2" title="Adicionar tarefa" disabled={!todo.trim()}>
@@ -63,3 +46,5 @@ export default function AddItem({ add }: TodoProps) {
       </section>
    )
 }
+
+export default AddItem
