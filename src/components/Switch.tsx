@@ -50,7 +50,6 @@ const Check = styled.input`
    }
 `
 
-
 interface SwitchProps {
    handleTheme: (theme: string) => void
 }
