@@ -61,8 +61,8 @@ export default function Todo() {
       <main className="m-3">
          <div className="container p-3">
             <h2 className="text-center mb-3" title="Insira suas atividades">Insira suas atividades</h2><hr />
-            <Filters filtrarTodo={filtrarTodo} disabled={!todos.length} />
             <AddItem add={addItem} />
+            <Filters filtrarTodo={filtrarTodo} disabled={!todos.length} />
             <ListTodo todos={todos} remove={removeItem} done={checked} handleDone={handleDone} todoFilter={todoFilter} />
          </div>
       </main>
