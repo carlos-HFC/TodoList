@@ -51,8 +51,10 @@ const ListTodo: React.FC<ListTodoProps> = ({ todos, remove, done, handleDone, to
    return (
       <section className="mt-4">
          <div className="importButtons">
-            <Json />
-            <Button background="typescript" title="Exportar arquivo JSON" className="btn-sm ml-2" onClick={exportJson}>Exportar JSON</Button>
+            <Json disabled={!todos.length} />
+            <Button background="typescript" disabled={!todos.length} title="Exportar arquivo JSON" className="btn-sm ml-2" onClick={exportJson}>
+               Exportar JSON
+            </Button>
          </div>
          {todoFilter[0] === "Error404\\NotFound" ? (
             <h2 className="mt-3 text-center" title="Não há resultados para o(s) filtro(s)">Não há resultados para o(s) filtro(s)</h2>
