@@ -1,6 +1,6 @@
 {
   "homepage": "http://carlos-HFC.github.io/TodoList",
-  "name": "my-app",
+  "name": "todo-list",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
