@@ -11,6 +11,13 @@ interface FilterTodoProps {
 
 const Collapse = styled.div<{ open: boolean }>`
    overflow: hidden;
+   width: 75%;
+   margin: auto;
+   
+   @media screen and (max-width: 767px) {
+      width: 100%
+   }
+
    ${props => {
       if (props.open) {
          return `
