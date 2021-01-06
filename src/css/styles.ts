@@ -97,7 +97,7 @@ export default createGlobalStyle`
    
    .importButtons {
       display: flex;
-      justify-content: flex-end;
+      justify-content: center;
       margin-bottom: 1rem;
 
       @media screen and (max-width: 767px) {
