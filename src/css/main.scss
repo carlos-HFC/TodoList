@@ -5,9 +5,9 @@ $not: (
 
 @each $key, $cor in $not {
   .notification-#{$key} {
-    color: $cor;
-    border-color: lighten($cor, 55);
     background: linear-gradient(125deg, lighten($cor, 65), lighten($cor, 50));
+    border-color: lighten($cor, 55);
+    color: $cor;
   }
 
   .notification-header-#{$key} {
@@ -16,15 +16,15 @@ $not: (
 }
 
 $colors: (
-  "elixir": #6e4a7e,
-  "typescript": #2b7489,
+  elixir: #6e4a7e,
+  typescript: #2b7489,
 );
 
 @each $key, $cor in $colors {
   .btn-#{$key} {
     background: $cor;
-    color: white;
     border-color: $cor;
+    color: white;
 
     &:hover,
     &:focus {
