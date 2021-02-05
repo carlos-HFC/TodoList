@@ -5,27 +5,27 @@ import Todo from './pages/Todo';
 import Header from './components/Header';
 import tema from './context';
 
-import GlobalStyle from './css/styles'
 import { dark, light } from './css/themes'
+import GlobalStyle from './css/styles'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import './css/main.min.css'
 
 function App() {
-   const [theme, setTheme] = useState<DefaultTheme>(JSON.parse(localStorage.getItem("THEME") as string) || light)
+  const [theme, setTheme] = useState<DefaultTheme>(JSON.parse(localStorage.getItem("THEME") as string) || dark)
 
-   useEffect(() => localStorage.setItem("THEME", JSON.stringify(theme)), [theme])
+  useEffect(() => localStorage.setItem("THEME", JSON.stringify(theme)), [theme])
 
-   const handleTheme = () => setTheme(theme.title === 'light' ? dark : light)
+  const handleTheme = () => setTheme(theme.title === 'light' ? dark : light)
 
-   return (
-      <ThemeProvider theme={theme}>
-         <GlobalStyle />
-         <tema.Provider value={{ handleTheme }}>
-            <Header />
-         </tema.Provider>
-         <Todo />
-      </ThemeProvider>
-   );
+  return (
+    <ThemeProvider theme={theme}>
+      <GlobalStyle />
+      <tema.Provider value={{ handleTheme }}>
+        <Header />
+      </tema.Provider>
+      <Todo />
+    </ThemeProvider>
+  );
 }
 
 export default App;

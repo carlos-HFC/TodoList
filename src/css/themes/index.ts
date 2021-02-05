@@ -1,21 +1,19 @@
-const light = {
-   title: "light",
-   background: "#f5f5f5",
-   text: "#333",
-   primary: "#5588ee",
-   checked: "#dedede",
-   shadow: "0,0,0",
-   borderChecked: "#ccc"
+export const dark = {
+  background: "#222",
+  borderChecked: "#999",
+  checked: "#666",
+  primary: "#333",
+  shadow: "255,255,255",
+  text: "#fff",
+  title: "dark",
 }
 
-const dark = {
-   title: "dark",
-   background: "#222",
-   text: "#fff",
-   primary: "#333",
-   checked: "#666",
-   shadow: "255,255,255",
-   borderChecked: "#999"
+export const light = {
+  background: "#f5f5f5",
+  borderChecked: "#ccc",
+  checked: "#dedede",
+  primary: "#5588ee",
+  shadow: "0,0,0",
+  text: "#333",
+  title: "light",
 }
-
-export { dark, light }
