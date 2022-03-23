@@ -52,7 +52,7 @@ const ListTodo: React.FC<ListTodoProps> = ({ todos, remove, done, handleDone, to
     <section className="mt-4">
       <div className="importButtons">
         <Json />
-        <Button background="typescript" disabled={!todos.length} title="Exportar arquivo JSON" className="btn-sm ml-2" onClick={exportJson}>
+        <Button variant="primary" disabled={!todos.length} title="Exportar arquivo JSON" className="btn-sm ml-2" onClick={exportJson}>
           Exportar JSON
             </Button>
       </div>
@@ -72,7 +72,7 @@ const ListTodo: React.FC<ListTodoProps> = ({ todos, remove, done, handleDone, to
                         <input type="text" className="form-control w-75" title="Edite o título da atividade"
                           defaultValue={edit.item} onChange={e => setEdit({ ...edit, item: e.target.value })}
                         />
-                        <Button background="success" className="btn-sm" title="Salvar tarefa">
+                        <Button variant="success" className="btn-sm" title="Salvar tarefa">
                           <FaCheck />
                         </Button>
                       </form>
@@ -86,10 +86,10 @@ const ListTodo: React.FC<ListTodoProps> = ({ todos, remove, done, handleDone, to
                           <label htmlFor={el}>{el}</label>
                         </div>
                         <div className="btn-group">
-                          <Button background="warning" className="btn-sm" disabled={done.includes(i)} title="Editar tarefa" onClick={() => editItem(el, i)}>
+                          <Button variant="warning" className="btn-sm" disabled={done.includes(i)} title="Editar tarefa" onClick={() => editItem(el, i)}>
                             <FaEdit />
                           </Button>
-                          <Button background="danger" className="btn-sm" disabled={done.includes(i)} title="Remover tarefa" onClick={() => remove(el)}>
+                          <Button variant="danger" className="btn-sm" disabled={done.includes(i)} title="Remover tarefa" onClick={() => remove(el)}>
                             <FaTrash />
                           </Button>
                         </div>

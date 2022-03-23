@@ -38,7 +38,7 @@ const AddItem: React.FC<TodoProps> = ({ add }) => {
           <input type="text" id="todo" title="Insira título da atividade" className="form-control col-12 col-md-8 mb-2" minLength={1} autoComplete="off"
             value={todo} onChange={e => setTodo(e.target.value)}
           />
-          <Button background="success" className="my-query__btn mb-2" title="Adicionar tarefa" disabled={!todo.trim()}>
+          <Button variant="success" className="my-query__btn mb-2" title="Adicionar tarefa" disabled={!todo.trim()}>
             <FaPlusCircle className="mr-2" />Adicionar
           </Button>
         </form>

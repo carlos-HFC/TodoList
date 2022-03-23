@@ -96,10 +96,10 @@ const Filters: React.FC<FilterTodoProps> = ({ cancelFilter, filtrarTodo, disable
             </div>
           </fieldset>
           <div className="col-lg col-12 mb-2 d-flex align-items-end justify-content-end">
-            <Button background="primary" type="submit" className="my-query__btn btn-sm" disabled={disabledFilter} title="Filtrar atividades">
+            <Button variant="primary" type="submit" className="my-query__btn btn-sm" disabled={disabledFilter} title="Filtrar atividades">
               <FaFilter className="mr-2" />Filtrar
             </Button>
-            <Button background="secondary" type="reset" className="my-query__btn btn-sm ml-2" disabled={disabledCancel} title="Cancelar filtros" onClick={cancel}>
+            <Button variant="secondary" type="reset" className="my-query__btn btn-sm ml-2" disabled={disabledCancel} title="Cancelar filtros" onClick={cancel}>
               <FaBan className="mr-2" />Cancelar
             </Button>
           </div>

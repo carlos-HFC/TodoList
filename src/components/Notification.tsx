@@ -7,7 +7,6 @@ interface NotificationProps {
 
 const Container = styled.div<Pick<NotificationProps, "show">>`
   ${props => props.show ? `right: 2%` : `right: -400px`};
-  ${props => props.theme.title === 'light' && `box-shadow: 0 3px 10px rgba(${props.theme.shadow},.5);`}
 
   border-radius: 5px;
   font-size: 0.8rem;
