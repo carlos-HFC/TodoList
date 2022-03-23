@@ -1,13 +1,38 @@
-import 'styled-components'
+import 'styled-components';
 
 declare module 'styled-components' {
   export interface DefaultTheme {
-    background: string
-    borderChecked: string
-    checked: string
-    primary: string
-    shadow: string
-    text: string
-    title: string
+    name: string;
+    text: string;
+    background: string;
+    header: string;
+    list: {
+      border: string;
+      borderChecked: string;
+      bgChecked: string;
+    };
+    shadow: string;
+    button: {
+      primary: {
+        bg: string;
+        text: string;
+      };
+      secondary: {
+        bg: string;
+        text: string;
+      };
+      warning: {
+        bg: string;
+        text: string;
+      };
+      success: {
+        bg: string;
+        text: string;
+      };
+      danger: {
+        bg: string;
+        text: string;
+      };
+    };
   }
 }
