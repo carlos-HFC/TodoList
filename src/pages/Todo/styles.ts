@@ -11,11 +11,15 @@ export const Main = styled.main`
 
   h1 {
     color: ${props => props.theme.text};
-    font-size: 1.75rem;
     border-bottom: 1px solid ${props => props.theme.text};
     text-align: center;
     padding-bottom: 1rem;
     transition: color .3s, border-color .3s;
+    font-size: 1.5rem;
+    
+    @media (min-width: 768px) {
+      font-size: 1.75rem;
+    }
   }
 
   form {
@@ -24,7 +28,7 @@ export const Main = styled.main`
     width: 100%;
     gap: 1rem;
 
-    @media (min-width: 992px) {
+    @media (min-width: 768px) {
       flex-direction: row;
     }
   }

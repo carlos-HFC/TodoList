@@ -1,6 +1,6 @@
-import { FormEvent, useState } from 'react';
+import { FormEvent, useEffect, useState } from "react";
 
-import { Button, Input, Item } from '../../components';
+import { Button, Input, Item } from "../../components";
 
 import { List, Main } from "./styles";
 
@@ -11,17 +11,6 @@ interface Todos {
 }
 
 export function Todo() {
-  // function handleDone(id: number) {
-  //   const already = checked.findIndex(el => el === id);
-
-  //   if (already >= 0) {
-  //     const filtered = checked.filter(el => el !== id);
-  //     setChecked(filtered.sort());
-  //   } else {
-  //     setChecked([...checked, id].sort());
-  //   }
-  // }
-
   // function filtrarTodo(value: string, type: string) {
   //   let filtered = todos;
 
@@ -43,7 +32,9 @@ export function Todo() {
   // }
 
   const [item, setItem] = useState("");
-  const [todos, setTodos] = useState<Todos[]>([]);
+  const [todos, setTodos] = useState<Todos[]>(JSON.parse(localStorage.getItem(String(process.env.REACT_APP_TODO_LIST)) as string) || []);
+
+  useEffect(() => localStorage.setItem(String(process.env.REACT_APP_TODO_LIST), JSON.stringify(todos)), [todos]);
 
   function addItem(e: FormEvent) {
     e.preventDefault();
@@ -63,7 +54,7 @@ export function Todo() {
     setTodos(filtered);
   }
 
-  function handleDone(id: number) {
+  function handleToggleChecked(id: number) {
     const filtered = todos.filter(todo => todo.id !== id);
 
     const todo = todos.find(todo => todo.id === id) as Todos;
@@ -87,7 +78,7 @@ export function Todo() {
 
         <List>
           {todos.map(todo => (
-            <Item key={todo.id} checked={todo.checked} onChecked={() => handleDone(todo.id)} onDelete={() => removeItem(todo.id)}>
+            <Item key={todo.id} checked={todo.checked} onChecked={() => handleToggleChecked(todo.id)} onDelete={() => removeItem(todo.id)}>
               {todo.text}
             </Item>
           ))}
