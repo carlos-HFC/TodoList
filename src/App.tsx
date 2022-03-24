@@ -4,14 +4,14 @@ import { ThemeProvider, DefaultTheme } from 'styled-components';
 import { Header } from './components';
 import { Todo } from './pages';
 
-import { dark, light } from './css/themes';
 import GlobalStyle from './css/styles';
+import { dark, light } from './css/themes';
 import './css/main.min.css';
 
-function App() {
-  const [theme, setTheme] = useState<DefaultTheme>(light);
+export function App() {
+  const [theme, setTheme] = useState<DefaultTheme>(JSON.parse(localStorage.getItem(String(process.env.REACT_APP_THEME)) as string) || dark);
 
-  useEffect(() => localStorage.setItem("THEME", JSON.stringify(theme)), [theme]);
+  useEffect(() => localStorage.setItem(String(process.env.REACT_APP_THEME), JSON.stringify(theme)), [theme]);
 
   const handleTheme = () => setTheme(theme.name === 'light' ? dark : light);
 
@@ -23,5 +23,3 @@ function App() {
     </ThemeProvider>
   );
 }
-
-export default App;
