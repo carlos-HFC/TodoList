@@ -13,23 +13,23 @@ export const dark = {
   shadow: `rgba(255,255,255,.2)`,
   button: {
     primary: {
-      bg: COLORS.blue,
+      bg: COLORS.gray800,
       text: COLORS.white
     },
     secondary: {
-      bg: COLORS.gray400,
-      text: COLORS.white
+      bg: COLORS.gray100,
+      text: COLORS.black
     },
     warning: {
-      bg: COLORS.yellow,
+      bg: COLORS.gray800,
       text: COLORS.white
     },
     success: {
-      bg: COLORS.green,
+      bg: COLORS.gray800,
       text: COLORS.white
     },
     danger: {
-      bg: COLORS.red,
+      bg: COLORS.gray800,
       text: COLORS.white
     },
   }
