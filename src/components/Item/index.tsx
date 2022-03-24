@@ -56,7 +56,7 @@ const Wrapper = styled.li<Pick<ItemProps, 'checked'>>`
 
     input[type="checkbox"] {
       appearance: none;
-      border: 1px solid ${COLORS.gray400};
+      border: 1.5px solid ${COLORS.gray400};
       outline: none;
       position: relative;
       transition: background-color .2s, border-color .2s;
@@ -88,18 +88,15 @@ const Wrapper = styled.li<Pick<ItemProps, 'checked'>>`
 
   .item_btn {
     display: flex;
+    gap: .25rem;
+
+    @media (min-width: 768px) {
+      gap: 0.5rem;
+    }
 
     button {
       padding: 0.5rem;
       font-size: .8rem;
-
-      &:first-child {
-        border-radius: .25rem 0 0 .25rem;
-      }
-      
-      &:last-child {
-        border-radius: 0 .25rem .25rem 0;
-      }
     }
   }
 `;
