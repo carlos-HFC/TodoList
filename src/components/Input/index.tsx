@@ -2,9 +2,11 @@ import { lighten } from "polished";
 import { InputHTMLAttributes } from "react";
 import styled from "styled-components";
 
-import { COLORS, FONTS } from "../../css/themes/variables";
+import { COLORS } from "../../css/themes/variables";
 
-interface InputProps extends InputHTMLAttributes<HTMLInputElement> {}
+interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
+  label?: string;
+}
 
 const Floating = styled.div`
   border-radius: 0.5rem;
@@ -23,7 +25,6 @@ const Label = styled.label`
   will-change: transform;
   pointer-events: none;
   left: 1rem;
-  font-family: ${FONTS.primary};
   color: ${props => props.theme.text};
 `;
 
@@ -41,7 +42,6 @@ const InputBlock = styled.input`
   height: inherit;
   outline: 0;
   border-radius: inherit;
-  font-family: ${FONTS.primary};
   color: ${props => props.theme.text};
   box-shadow: 0 0 0 .15rem ${lighten(.7, COLORS.black)};
 
@@ -60,11 +60,12 @@ const InputBlock = styled.input`
   }
 `;
 
-export function Input(props: InputProps) {
+export function Input({ label = "To Do:", ...props }: InputProps) {
   return (
     <Floating>
       <InputBlock autoComplete="off" type="text" id="todo" placeholder="To Do" {...props} />
-      <Label htmlFor="todo">To Do:</Label>
+      <Label htmlFor="todo">{label}</Label>
     </Floating>
   );
 }
+

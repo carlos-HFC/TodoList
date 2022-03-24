@@ -7,6 +7,7 @@ export default createGlobalStyle`
     box-sizing: border-box;
     margin: 0;
     padding: 0;
+    font-family: ${FONTS.primary};
   }
 
   canvas {
@@ -35,9 +36,5 @@ export default createGlobalStyle`
     @media (min-width: 1200px) {
       max-width: 1140px;
     }
-  }
-
-  h1, h2, h3, h4, h5, h6 {
-    font-family: ${FONTS.primary};
   }
 `;

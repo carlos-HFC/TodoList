@@ -2,7 +2,7 @@ import { transparentize } from "polished";
 import { FaCheck } from "react-icons/fa";
 import styled, { useTheme } from "styled-components";
 
-import { COLORS, FONTS } from "../../css/themes/variables";
+import { COLORS } from "../../css/themes/variables";
 
 interface HeaderProps {
   handleTheme(): void;
@@ -26,7 +26,6 @@ const Wrapper = styled.header`
       display: inherit;
       align-items: inherit;
       gap: 1rem;
-      font-family: ${FONTS.primary};
       font-size: 1.25rem;
       
       @media (min-width: 768px) {
@@ -56,7 +55,7 @@ const Switch = styled.label`
   
     &::before {
       border-radius: 50%;
-      background: ${COLORS.offWhite};
+      background: ${COLORS.gray200};
       border: 1px solid ${transparentize(.6, COLORS.gray300)};
       bottom: -.25rem;
       content: "";
@@ -65,7 +64,7 @@ const Switch = styled.label`
       position: absolute;
       transition: transform 0.2s;
       width: 1.5rem;
-      box-shadow: 0 2px 4px ${props => props.theme.shadow};
+      box-shadow: 0 0 0 1px ${props => props.theme.shadow};
       will-change: transform;
     }
   }

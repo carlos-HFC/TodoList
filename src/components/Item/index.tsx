@@ -1,13 +1,14 @@
 import { darken } from "polished";
-import { ButtonHTMLAttributes, InputHTMLAttributes } from "react";
+import { ButtonHTMLAttributes, InputHTMLAttributes, ReactNode } from "react";
 import { VscEdit, VscTrash } from "react-icons/vsc";
 import styled, { css } from "styled-components";
 
 import { Button } from "..";
-import { COLORS, FONTS } from "../../css/themes/variables";
+
+import { COLORS } from "../../css/themes/variables";
 
 interface ItemProps {
-  children: string;
+  children: ReactNode;
   checked?: boolean;
   onChecked?: InputHTMLAttributes<HTMLInputElement>['onClick'];
   onEdit?: ButtonHTMLAttributes<HTMLButtonElement>['onClick'];
@@ -21,11 +22,10 @@ const Wrapper = styled.li<Pick<ItemProps, 'checked'>>`
   border: 2px solid ${props => props.theme.list.border};
   border-radius: 0.5rem;
   width: 100%;
-  padding: 1rem;
+  padding: 0 1rem;
   box-shadow: 0 1px 2px 1px ${props => props.theme.shadow};
   background: ${props => props.theme.background};
   transition: box-shadow .3s, border-color .3s, background-color .3s;
-  font-family: ${FONTS.primary};
   position: relative;
   gap: 1rem;
 
@@ -56,7 +56,7 @@ const Wrapper = styled.li<Pick<ItemProps, 'checked'>>`
 
     input[type="checkbox"] {
       appearance: none;
-      border: 1.5px solid ${COLORS.gray400};
+      border: 2px solid ${COLORS.gray400};
       outline: none;
       position: relative;
       transition: background-color .2s, border-color .2s;
@@ -80,9 +80,11 @@ const Wrapper = styled.li<Pick<ItemProps, 'checked'>>`
       color: ${props => props.theme.text};
       transition: color .3s, font-style .3s, text-decoration .3s, opacity .3s;
       will-change: opacity;
-      font-family: ${FONTS.primary};
       font-size: 1rem;
       user-select: none;
+      display: flex;
+      align-items: stretch;
+      padding: 1rem 0;
     }
   }
 
@@ -97,6 +99,7 @@ const Wrapper = styled.li<Pick<ItemProps, 'checked'>>`
     button {
       padding: 0.5rem;
       font-size: .8rem;
+      border-radius: .25rem
     }
   }
 `;
@@ -105,8 +108,8 @@ export function Item(props: ItemProps) {
   return (
     <Wrapper checked={props.checked}>
       <div className="item_check">
-        <input type="checkbox" id={props.children} defaultChecked={props.checked} onClick={props.onChecked} />
-        <label htmlFor={props.children}>{props.children}</label>
+        <input type="checkbox" id={String(props.children)} defaultChecked={props.checked} onClick={props.onChecked} />
+        <label htmlFor={String(props.children)}>{props.children}</label>
       </div>
       <div className="item_btn">
         <Button variant="warning" onClick={props.onEdit} disabled={props.checked}>
