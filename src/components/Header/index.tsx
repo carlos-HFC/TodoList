@@ -27,7 +27,11 @@ const Wrapper = styled.header`
       align-items: inherit;
       gap: 1rem;
       font-family: ${FONTS.primary};
-      font-size: 1.5rem;
+      font-size: 1.25rem;
+      
+      @media (min-width: 768px) {
+        font-size: 1.5rem;
+      }
     }
   }
 `;
