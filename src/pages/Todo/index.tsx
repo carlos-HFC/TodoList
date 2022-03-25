@@ -1,51 +1,38 @@
-import { lazy, Suspense, useRef } from "react";
-import { FormEvent, useEffect, useState } from "react";
-import { VscListSelection, VscSave } from "react-icons/vsc";
 
+import { ChangeEvent, FormEvent, lazy, Suspense, useRef, useState } from "react";
+import { VscSave } from "react-icons/vsc";
+
+import { TTodos } from "../../@types";
 import { Button, Input } from "../../components";
+import { INITIAL_STATE_EDIT_TODO } from "../../constants";
+import { useTodo } from "../../context";
 
-import { Filter, List, Main } from "./styles";
+import { Main } from "./styles";
 
+const Filter = lazy(() => import('../../components').then(({ Filter }) => ({ default: Filter })));
 const Item = lazy(() => import('../../components').then(({ Item }) => ({ default: Item })));
-
-interface TTodos {
-  id: number;
-  text: string;
-  checked: boolean;
-}
-
-interface TFilterTodos {
-  filter: boolean;
-  todos: TTodos[];
-}
-
-const INITIAL_STATE_TODOS_FILTERED = {} as TFilterTodos;
-const INITIAL_STATE_EDIT_TODO = {} as TTodos;
-const INITIAL_STATE_FILTER_TODO = {
-  text: "",
-  type: ""
-};
+const List = lazy(() => import('./styles').then(({ List }) => ({ default: List })));
 
 export function Todo() {
+  const { todos, todosFiltered, handleSetTodos } = useTodo();
+
   const listRef = useRef<HTMLUListElement | null>(null);
 
-  const [openFilter, setOpenFilter] = useState(false);
   const [item, setItem] = useState("");
   const [edit, setEdit] = useState(INITIAL_STATE_EDIT_TODO);
-  const [filter, setFilter] = useState(INITIAL_STATE_FILTER_TODO);
-  const [todos, setTodos] = useState<TTodos[]>(JSON.parse(localStorage.getItem(String(process.env.REACT_APP_TODO_LIST)) as string) || []);
-  const [todosFiltered, setTodosFiltered] = useState(INITIAL_STATE_TODOS_FILTERED);
-
-  useEffect(() => localStorage.setItem(String(process.env.REACT_APP_TODO_LIST), JSON.stringify(todos)), [todos]);
 
   function addItem(e: FormEvent) {
     e.preventDefault();
 
     if (!item.trim()) return;
 
-    const newTodo = { text: item.trim(), id: todos.length + 1, checked: false };
+    let allTodos = [...todos];
 
-    setTodos([...todos, newTodo]);
+    let lastTodo = (allTodos?.pop()?.id || allTodos.length) + 1;
+
+    const newTodo = { text: item.trim(), id: lastTodo, checked: false };
+
+    handleSetTodos([...todos, newTodo]);
 
     setItem("");
   }
@@ -53,7 +40,7 @@ export function Todo() {
   function removeItem(id: number) {
     const filtered = todos.filter(todo => todo.id !== id);
 
-    setTodos(filtered);
+    handleSetTodos(filtered);
   }
 
   function handleToggleChecked(id: number) {
@@ -63,7 +50,7 @@ export function Todo() {
 
     Object.assign(todoById, { checked: !todoById.checked });
 
-    setTodos([...filtered, todoById].sort((a, b) => a.id - b.id));
+    handleSetTodos([...filtered, todoById].sort((a, b) => a.id - b.id));
   }
 
   function editItem(id: number) {
@@ -81,36 +68,50 @@ export function Todo() {
 
     Object.assign(todoById, { text: edit.text });
 
-    setTodos([...filtered, todoById].sort((a, b) => a.id - b.id));
+    handleSetTodos([...filtered, todoById].sort((a, b) => a.id - b.id));
 
     setEdit(INITIAL_STATE_EDIT_TODO);
   }
 
-  function handleFilterTodo(e: FormEvent) {
-    e.preventDefault();
-
-    const filtered = todos.filter(todo => {
-      if (filter.text) {
-        if (filter.type === "Done") return todo.checked && todo.text.toLowerCase().startsWith(filter.text.toLowerCase());
-        if (filter.type === "Incomplete") return !todo.checked && todo.text.toLowerCase().startsWith(filter.text.toLowerCase());
-        return todo.text.toLowerCase().startsWith(filter.text.toLowerCase());
-      } else {
-        if (filter.type === "Done") return todo.checked;
-        if (filter.type === "Incomplete") return !todo.checked;
-        return todo;
-      }
+  function readFile(file: File) {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = () => resolve(reader.result);
+      reader.onerror = (err) => reject(err);
+      reader.readAsText(file);
     });
-
-    if (filtered.length > 0) {
-      listRef.current?.scrollIntoView({ behavior: "smooth" });
-    }
-
-    setTodosFiltered({ todos: filtered, filter: true });
   }
 
-  function cancelFilterTodo() {
-    setTodosFiltered(INITIAL_STATE_TODOS_FILTERED);
-    setFilter(INITIAL_STATE_FILTER_TODO);
+  function uploadTodos(e: ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files && e.target.files[0];
+
+    readFile(file as File)
+      .then(base => {
+        const importedTodos = JSON.parse(base as string) as TTodos[];
+
+        let concatTodos = [...importedTodos, ...todos];
+
+        const newTodos = concatTodos.filter((todo, index, newArr) => newArr.findIndex(v2 => v2.id === todo.id) === index).sort((a, b) => a.id - b.id);
+
+        handleSetTodos(newTodos);
+      });
+  }
+
+  function downloadTodos() {
+    const blob = new Blob([JSON.stringify(todos)], { type: 'text/json' });
+
+    const a = document.createElement('a');
+    a.download = 'todos.json';
+    a.href = window.URL.createObjectURL(blob);
+
+    const clickEvent = new MouseEvent('click', {
+      view: window,
+      bubbles: true,
+      cancelable: true
+    });
+
+    a.dispatchEvent(clickEvent);
+    a.remove();
   }
 
   return (
@@ -119,72 +120,36 @@ export function Todo() {
         <h1>Insira suas atividades</h1>
 
         <form onSubmit={addItem}>
-          <Input value={item} onChange={e => setItem(e.target.value)} />
+          <Input id="ToDo" value={item} onChange={e => setItem(e.target.value)} />
           <Button variant="success" disabled={!item.trim()}>
             Adicionar
           </Button>
         </form>
 
-        <Filter open={openFilter}>
-          <header>
-            <h2>Filtrar</h2>
-            <Button onClick={() => setOpenFilter(open => !open)}>
-              <VscListSelection />
-            </Button>
-          </header>
+        <div className="external_funcionalities">
+          <Button as="label">
+            Importar JSON
+            <input type="file" onChange={uploadTodos} />
+          </Button>
+          <Button onClick={downloadTodos}>
+            Exportar JSON
+          </Button>
+        </div>
 
-          <div className="filter">
-            <form onSubmit={handleFilterTodo}>
-              <Input label="Título To Do"
-                value={filter.text} onChange={e => setFilter({ ...filter, text: e.target.value })}
-              />
-              <fieldset>
-                <span>Tipo</span>
-                <div className="filter_types">
-                  <div className="filter_types-check">
-                    <input type="radio" id="All" name="filterTodos"
-                      checked={!filter.type} value="" onChange={e => setFilter({ ...filter, type: e.target.value })}
-                    />
-                    <label htmlFor="All">Todos</label>
-                  </div>
-                  <div className="filter_types-check">
-                    <input type="radio" id="Incomplete" name="filterTodos"
-                      checked={filter.type === "Incomplete"} value="Incomplete" onChange={e => setFilter({ ...filter, type: e.target.value })}
-                    />
-                    <label htmlFor="Incomplete">A fazer</label>
-                  </div>
-                  <div className="filter_types-check">
-                    <input type="radio" id="Done" name="filterTodos"
-                      checked={filter.type === "Done"} value="Done" onChange={e => setFilter({ ...filter, type: e.target.value })}
-                    />
-                    <label htmlFor="Done">Concluídos</label>
-                  </div>
-                </div>
-              </fieldset>
-              <div className="filter_btns">
-                <Button type="submit">
-                  Filtrar
-                </Button>
-                <Button variant="secondary" onClick={cancelFilterTodo} type="reset">
-                  Cancelar
-                </Button>
-              </div>
-            </form>
-          </div>
-        </Filter>
+        <Suspense fallback={"Loading"}>
+          <Filter listRef={listRef} />
 
-        <List ref={listRef}>
-          {(todosFiltered.todos || todos).map(todo => edit.id === todo.id ? (
-            <form onSubmit={handleSaveEdit}>
-              <input type="text"
-                defaultValue={edit.text} onChange={e => setEdit({ ...edit, text: e.target.value })}
-              />
-              <Button>
-                <VscSave />
-              </Button>
-            </form>
-          ) : (
-            <Suspense fallback={"ola"}>
+          <List ref={listRef}>
+            {(todosFiltered.todos || todos).map(todo => edit.id === todo.id ? (
+              <form onSubmit={handleSaveEdit}>
+                <input type="text"
+                  defaultValue={edit.text} onChange={e => setEdit({ ...edit, text: e.target.value })}
+                />
+                <Button>
+                  <VscSave />
+                </Button>
+              </form>
+            ) : (
               <Item key={todo.id} checked={todo.checked}
                 onChecked={() => handleToggleChecked(todo.id)}
                 onEdit={() => editItem(todo.id)}
@@ -192,9 +157,9 @@ export function Todo() {
               >
                 {todo.text}
               </Item>
-            </Suspense>
-          ))}
-        </List>
+            ))}
+          </List>
+        </Suspense>
       </div>
     </Main>
   );
