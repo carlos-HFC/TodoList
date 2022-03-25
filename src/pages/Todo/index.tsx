@@ -131,7 +131,7 @@ export function Todo() {
             Importar JSON
             <input type="file" onChange={uploadTodos} />
           </Button>
-          <Button onClick={downloadTodos}>
+          <Button onClick={downloadTodos} disabled={!todos.length}>
             Exportar JSON
           </Button>
         </div>

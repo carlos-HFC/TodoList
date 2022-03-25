@@ -54,8 +54,11 @@ export const Main = styled.main`
     }
 
     label, button {
-      cursor: pointer;
       width: 100%;
+
+      &:not(:disabled) {
+        cursor: pointer;
+      }
 
       @media (min-width: 768px) {
         width: auto;
