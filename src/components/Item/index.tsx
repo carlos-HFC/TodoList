@@ -1,4 +1,3 @@
-import { darken } from "polished";
 import { ButtonHTMLAttributes, InputHTMLAttributes, ReactNode } from "react";
 import { VscEdit, VscTrash } from "react-icons/vsc";
 import styled, { css } from "styled-components";
@@ -24,7 +23,6 @@ const Wrapper = styled.li<Pick<ItemProps, 'checked'>>`
   width: 100%;
   padding: 0 1rem;
   box-shadow: 0 1px 2px 1px ${props => props.theme.shadow};
-  background: ${props => props.theme.background};
   transition: box-shadow .3s, border-color .3s, background-color .3s;
   position: relative;
   gap: 1rem;
@@ -41,7 +39,7 @@ const Wrapper = styled.li<Pick<ItemProps, 'checked'>>`
       label {
         font-style: italic;
         text-decoration: line-through;
-        color: ${darken(.2, props.theme.list.borderChecked)};
+        color: ${props.theme.list.textChecked}!important;
         opacity: .8;
       }
     }
@@ -70,8 +68,8 @@ const Wrapper = styled.li<Pick<ItemProps, 'checked'>>`
       user-select: none;
 
       &:checked {
-        background: ${COLORS.gray600};
-        border-color: ${COLORS.gray600};
+        background: ${props => props.theme.list.checkbox};
+        border-color: ${props => props.theme.list.checkbox};
       }
     }
 
@@ -112,11 +110,11 @@ export function Item(props: ItemProps) {
         <label htmlFor={String(props.children)}>{props.children}</label>
       </div>
       <div className="item_btn">
-        <Button variant="warning" onClick={props.onEdit} disabled={props.checked}>
-          <VscEdit />
+        <Button variant="warning" onClick={props.onEdit} disabled={props.checked} aria-label="Editar ToDo">
+          <VscEdit aria-hidden="true" />
         </Button>
-        <Button variant="danger" onClick={props.onDelete} disabled={props.checked}>
-          <VscTrash />
+        <Button variant="danger" onClick={props.onDelete} disabled={props.checked} aria-label="Excluir ToDo">
+          <VscTrash aria-hidden="true" />
         </Button>
       </div>
     </Wrapper>

@@ -63,8 +63,8 @@ const InputBlock = styled.input`
 export function Input({ label = "To Do:", ...props }: InputProps) {
   return (
     <Floating>
-      <InputBlock autoComplete="off" type="text" id="todo" placeholder="To Do" {...props} />
-      <Label htmlFor="todo">{label}</Label>
+      <InputBlock autoComplete="off" id={props.id} placeholder={label} {...props} />
+      <Label htmlFor={props.id}>{label}</Label>
     </Floating>
   );
 }

@@ -1,6 +1,6 @@
 import { transparentize } from "polished";
 import { FaCheck } from "react-icons/fa";
-import styled, { useTheme } from "styled-components";
+import styled from "styled-components";
 
 import { COLORS } from "../../css/themes/variables";
 
@@ -35,14 +35,14 @@ const Wrapper = styled.header`
   }
 `;
 
-const Switch = styled.label`
+const Switch = styled.div`
   display: flex;
   align-items: center;
 
   span {
     border-radius: 1rem;
-    background: ${COLORS.white};
-    border: 1px solid ${transparentize(.6, COLORS.gray300)};
+    background: ${props => props.theme.name === 'light' ? COLORS.white : COLORS.black};
+    border: 1px solid ${props => props.theme.name === 'light' ? transparentize(.6, COLORS.gray300) : COLORS.black};
     cursor: pointer;
     transition: border-color 0.2s, background-color .2s;
     will-change: background-color, border-color;
@@ -66,28 +66,12 @@ const Switch = styled.label`
       width: 1.5rem;
       box-shadow: 0 0 0 1px ${props => props.theme.shadow};
       will-change: transform;
-    }
-  }
-
-  input {
-    height: 0;
-    opacity: 0;
-    width: 0;
-
-    &:checked + span {
-      background: ${COLORS.black};
-      border: 1px solid ${COLORS.black};
-
-      &::before {
-        transform: translateX(2rem);
-      }
+      ${props => props.theme.name === 'dark' && `transform: translateX(2rem)`}
     }
   }
 `;
 
 export function Header({ handleTheme }: HeaderProps) {
-  const { name } = useTheme();
-
   return (
     <Wrapper>
       <div className="container">
@@ -98,8 +82,7 @@ export function Header({ handleTheme }: HeaderProps) {
           </h1>
         </div>
         <div>
-          <Switch htmlFor="theme">
-            <input id="theme" type="checkbox" accessKey="s" onClick={handleTheme} defaultChecked={name === "dark"} />
+          <Switch onClick={handleTheme} accessKey="s">
             <span />
           </Switch>
         </div>
