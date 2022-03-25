@@ -2,7 +2,7 @@ name: Deploy to GitHub Pages
 on: 
   push:
     branches:
-      - gh-pages
+      - main
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
@@ -13,7 +13,7 @@ jobs:
     - name: Build
       run: |
         npm install
-        npm run-script build
+        npm run build
       env:
         REACT_APP_THEME: ${{ secrets.REACT_APP_THEME }}
         REACT_APP_TODO_LIST: ${{ secrets.REACT_APP_TODO_LIST }}
@@ -21,4 +21,4 @@ jobs:
     - name: Deploy
       uses: JamesIves/github-pages-deploy-action@releases/v3
       with:
-        BRANCH: gh-pages
+        BRANCH: main
