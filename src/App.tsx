@@ -2,11 +2,10 @@ import { useEffect, useState } from 'react';
 import { ThemeProvider, DefaultTheme } from 'styled-components';
 
 import { Header } from './components';
+import { TodoProvider } from "./context";
 import { Todo } from './pages';
 
-import GlobalStyle from './css/styles';
-import { dark, light } from './css/themes';
-import './css/main.min.css';
+import { GlobalStyle, dark, light } from './css';
 
 export function App() {
   const [theme, setTheme] = useState<DefaultTheme>(JSON.parse(localStorage.getItem(String(process.env.REACT_APP_THEME)) as string) || dark);
@@ -19,7 +18,9 @@ export function App() {
     <ThemeProvider theme={theme}>
       <GlobalStyle />
       <Header handleTheme={handleTheme} />
-      <Todo />
+      <TodoProvider>
+        <Todo />
+      </TodoProvider>
     </ThemeProvider>
   );
 }
