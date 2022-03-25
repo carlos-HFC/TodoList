@@ -103,10 +103,6 @@ export const Filter = styled.section<{ open: boolean; }>`
         flex-direction: column;
         width: 100%;
 
-        @media (min-width: 768px) {
-          width: 70%;
-        }
-
         span {
           color: ${props => props.theme.text};
         }
