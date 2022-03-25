@@ -17,6 +17,7 @@ jobs:
       env:
         REACT_APP_THEME: ${{ secrets.REACT_APP_THEME }}
         REACT_APP_TODO_LIST: ${{ secrets.REACT_APP_TODO_LIST }}
+        CI: false
 
     - name: Deploy
       uses: JamesIves/github-pages-deploy-action@releases/v3
