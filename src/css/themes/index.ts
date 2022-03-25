@@ -7,8 +7,10 @@ export const dark = {
   header: COLORS.gray800,
   list: {
     border: COLORS.gray400,
-    borderChecked: COLORS.gray700,
-    bgChecked: COLORS.gray700,
+    borderChecked: COLORS.gray300,
+    bgChecked: COLORS.gray500,
+    textChecked: COLORS.black,
+    checkbox: COLORS.gray700
   },
   shadow: `rgba(255,255,255,.2)`,
   button: {
@@ -44,6 +46,8 @@ export const light = {
     border: COLORS.gray200,
     borderChecked: COLORS.gray300,
     bgChecked: COLORS.gray200,
+    textChecked: COLORS.gray800,
+    checkbox: COLORS.gray600
   },
   shadow: `rgba(0,0,0,.2)`,
   button: {
